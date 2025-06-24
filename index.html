@@ -52,9 +52,10 @@
     async function checkWeather(city) {
       const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
 
+
       if (response.status == 404) {
-        document.querySelector(".error").style. display = "block";
-        document.querySelector(".weather").style. display = "none";
+        document.querySelector(".error").style.display = "block";
+        document.querySelector(".weather").style.display = "none";
       } else {
         var data = await response.json();
 
@@ -83,14 +84,26 @@
         }
 
         document.querySelector(".weather").style.display = "block";
-        document.querySelector(".error").style. display = "none";
+        document.querySelector(".error").style.display = "none";
       }
 
     }
 
     searchBtn.addEventListener("click", () => {
       checkWeather(searchBox.value);
-    })
+    });
+    searchBox.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        checkWeather(searchBox.value);
+      }
+    });
+    searchBtn.addEventListener("click", () => {
+      if (searchBox.value.trim() === "") {
+        alert("Please enter a city name");
+        return;
+      }
+      checkWeather(searchBox.value);
+    });
 
   </script>
 </body>
